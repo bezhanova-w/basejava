@@ -57,11 +57,11 @@
   - [Подробное введение в работу с Git](https://tproger.ru/translations/beginner-git-cheatsheet/)
   
 ### Настройка проекта
-- Создайте на GitHub репозиторий с названием `basejava`
+- Создайте на GitHub репозиторий с названием `com.basejava`
 - Откройте консоль (терминал) у себя на компьютере
 - Наберите и запустите: `git` (по умолчанию при установке git заносится в PATH. Если он не находится, [занесите](https://www.java.com/ru/download/help/path.xml) git в переменную окружения PATH и перезапустите консоль)
-- Создайте локальную копию проекта: `git clone https://github.com/JavaOps/basejava.git`
-- Перейдите в каталог проекта: `cd basejava`
+- Создайте локальную копию проекта: `git clone https://github.com/JavaOps/com.basejava.git`
+- Перейдите в каталог проекта: `cd com.basejava`
 - Настройте git в локальном проекте на свой проект в GitHub:
   - `git remote -v`
   - `git remote set-url origin url_на_твой_basejava-репозиторий.git` - настройка pull
@@ -69,7 +69,7 @@
   - `git push -u origin master`
 
 ## Домашнее задание HW1
-- Создайте в IntelliJ IDEA новый проект, выбрав каталог `basejava`, который вы клонировали ранее к себе на компьютер:
+- Создайте в IntelliJ IDEA новый проект, выбрав каталог `com.basejava`, который вы клонировали ранее к себе на компьютер:
 
 ![newproject](https://user-images.githubusercontent.com/29703461/38273513-d1f7ce52-3794-11e8-829c-305212c25be7.png)
 
@@ -79,16 +79,16 @@
 
 ![finish](https://user-images.githubusercontent.com/29703461/38275669-3e621614-379b-11e8-8b3a-8e0a3ad4c65c.png)
 
-- Реализуйте класс `ArrayStorage`, организовав хранение резюме на основе массива с методами `save, get, delete, size, clear, getAll`
-- Храните все резюме в начале `storage` (без дырок в виде `null`), чтобы не перебирать каждый раз все 10000 элементов
+- Реализуйте класс `com.basejava.webapp.storage.ArrayStorage`, организовав хранение резюме на основе массива с методами `save, get, delete, size, clear, getAll`
+- Храните все резюме в начале `com.basejava.webapp.com.basejava.webapp.storage` (без дырок в виде `null`), чтобы не перебирать каждый раз все 10000 элементов
 ```
-Схема хранения резюме в массиве storage (в элементах от 0 до size-1 отсутствуют null):
+Схема хранения резюме в массиве com.basejava.webapp.com.basejava.webapp.storage (в элементах от 0 до size-1 отсутствуют null):
 
 r1, r2, r3,..., rn, null, null,..., null
 <----- size ----->
-<------- storage.length (10000) ------->
+<------- com.basejava.webapp.com.basejava.webapp.storage.length (10000) ------->
 ```
-- Протестируйте вашу реализацию с помощью классов `MainArray.main()` и `MainTestArrayStorage.main()`
+- Протестируйте вашу реализацию с помощью классов `com.basejava.webapp.MainArray.main()` и `com.basejava.webapp.MainTestArrayStorage.main()`
 - Изучите дополнительные материалы по IntelliJ IDEA:
   - [Idea Wiki](https://github.com/JavaOPs/topjava/wiki/IDEA) ([поставьте кодировку UTF-8](https://github.com/JavaOPs/topjava/wiki/IDEA#Поставить-кодировку-utf-8), [поменяйте шрифт по умолчанию на DejaVu](https://github.com/JavaOPs/topjava/wiki/IDEA#Поменять-фонт-по-умолчанию-dejavu))
   - [Руководство пользователя IntelliJ IDEA. Отладчик](http://info.javarush.ru/idea_help/2014/01/22/Руководство-пользователя-IntelliJ-IDEA-Отладчик-.html)
@@ -112,7 +112,7 @@ r1, r2, r3,..., rn, null, null,..., null
 4. Не злоупотребляйте пустыми строками. Они используются нечасто для логического отделения больших кусков кода.
 5. Удаляйте неиспользуемые импорты (`Ctrl + Alt + O`)
 5. Не игнорируй подсказки IDEA (подсвечивает)
-6. `Resume r` — давай переменным осмысленные имена, например `resume`. `r` допустимо в коротких циклах и лямбдах.
+6. `com.basejava.webapp.model.Resume r` — давай переменным осмысленные имена, например `resume`. `r` допустимо в коротких циклах и лямбдах.
 7. В методе `clear()` обнуление массива предполагает именно обнуление (null), а не создание нового
 
 # Дополнительно (как учиться программированию)
