@@ -8,9 +8,7 @@ import java.util.stream.IntStream;
 /**
  * Array based com.basejava.webapp.storage for Resumes
  */
-public class ArrayStorage {
-    Resume[] storage = new Resume[10000];
-    private int size = 0;
+public class ArrayStorage extends AbstractArrayStorage{
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -26,8 +24,7 @@ public class ArrayStorage {
         int index = getIndex(r.getUuid());
         if (index >= 0) {
             storage[index] = r;
-        }
-        else {
+        } else {
             System.out.printf("Резюме с uuid \"%s\" не найдено в базе.", r.getUuid());
         }
     }
@@ -41,29 +38,11 @@ public class ArrayStorage {
         int index = getIndex(r.getUuid());
         if (index >= 0) {
             System.out.printf("Резюме с uuid \"%s\" уже есть в базе.", r.getUuid());
-        }
-        else {
-            if (size < storage.length) {
-                storage[size] = r;
-                size++;
-            } else {
-                System.out.println("Не удалось добавить резюме: база резюме полностью заполнена.");
-            }
-        }
-    }
-
-    public Resume get(String uuid) {
-        if (uuid == null) {
-            System.out.println("Переданы некорректные данные.");
-            return null;
-        }
-
-        int index = getIndex(uuid);
-        if (index >=0)
-            return storage[index];
-        else {
-            System.out.printf("Резюме с uuid \"%s\" не найдено в базе.", uuid);
-            return null;
+        } else if (size == STORAGE_LIMIT) {
+            System.out.println("Не удалось добавить резюме: база резюме полностью заполнена.");
+        } else {
+            storage[size] = r;
+            size++;
         }
     }
 
@@ -75,30 +54,25 @@ public class ArrayStorage {
 
         int index = getIndex(uuid);
         if (index >= 0) {
-            storage[index] = storage[size-1];
+            storage[index] = storage[size - 1];
             storage[size - 1] = null;
             size--;
-        }
-        else {
+        } else {
             System.out.printf("Резюме с uuid \"%s\" не найдено в базе.", uuid);
         }
     }
 
-    private int getIndex(String uuid) {
+    protected int getIndex(String uuid) {
         return uuid == null ? -1 : IntStream.range(0, size)
-                .filter(i -> uuid.equals(storage[i].getUuid()))
-                .findAny()
-                .orElse(-1);
+                                            .filter(i -> uuid.equals(storage[i].getUuid()))
+                                            .findAny()
+                                            .orElse(-1);
     }
 
     /**
-     * @return array, contains only Resumes in com.basejava.webapp.com.basejava.webapp.storage (without null)
+     * @return array, contains only Resumes in com.basejava.webapp.storage (without null)
      */
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
-    }
-
-    public int size() {
-        return size;
     }
 }
