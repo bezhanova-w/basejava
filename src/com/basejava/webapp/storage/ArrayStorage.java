@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 /**
  * Array based com.basejava.webapp.storage for Resumes
  */
-public class ArrayStorage extends AbstractArrayStorage{
+public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected int getIndex(String uuid) {

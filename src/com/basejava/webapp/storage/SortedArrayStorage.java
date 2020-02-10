@@ -8,12 +8,11 @@ import java.util.stream.IntStream;
 /**
  * Array based com.basejava.webapp.storage for Resumes
  */
-public class SortedArrayStorage extends AbstractArrayStorage{
+public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected int getIndex(String uuid) {
-        Resume searchKey = new Resume();
-        searchKey.setUuid(uuid);
+        Resume searchKey = new Resume(uuid);
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }
 
@@ -22,9 +21,9 @@ public class SortedArrayStorage extends AbstractArrayStorage{
 
         //сейчас index = -indexTo-1, где indexTo - это индекс первого элемента массива, который больше r
         //поэтому сдвигаем все значения после to вправо и вставляем наше резюме.
-        int indexTo  = - index - 1;
+        int indexTo = -index - 1;
         if (size + 1 - indexTo > 0) {
-            System.arraycopy(storage, indexTo, storage, indexTo + 1, size + 1 - indexTo);
+            System.arraycopy(storage, indexTo, storage, indexTo + 1, size - indexTo);
         }
         storage[indexTo] = r;
     }
