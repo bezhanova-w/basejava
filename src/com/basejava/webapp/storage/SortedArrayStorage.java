@@ -11,12 +11,6 @@ import java.util.stream.IntStream;
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected int getIndex(String uuid) {
-        Resume searchKey = new Resume(uuid);
-        return Arrays.binarySearch(storage, 0, size, searchKey);
-    }
-
-    @Override
     protected void insertElement(Resume r, int index) {
 
         //сейчас index = -indexTo-1, где indexTo - это индекс первого элемента массива, который больше r
@@ -29,10 +23,16 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void deleteByIndex(int index) {
+    protected void fillDeletedElement(int index) {
         int numMoved = size - 1 - index;
         if (numMoved > 0) {
             System.arraycopy(storage, index + 1, storage, index, numMoved);
         }
+    }
+
+    @Override
+    protected Integer getSearchKey(String uuid) {
+        Resume searchKey = new Resume(uuid);
+        return Arrays.binarySearch(storage, 0, size, searchKey);
     }
 }

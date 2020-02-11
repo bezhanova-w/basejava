@@ -11,20 +11,19 @@ import java.util.stream.IntStream;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected int getIndex(String uuid) {
-        return uuid == null ? -1 : IntStream.range(0, size)
-                .filter(i -> uuid.equals(storage[i].getUuid()))
-                .findAny()
-                .orElse(-1);
-    }
-
-    @Override
     protected void insertElement(Resume r, int index) {
         storage[size] = r;
     }
 
     @Override
-    protected void deleteByIndex(int index) {
+    protected void fillDeletedElement(int index) {
         storage[index] = storage[size - 1];
     }
+
+    @Override
+    protected Integer getSearchKey(String uuid) {
+        return uuid == null ? -1 : IntStream.range(0, size)
+                .filter(i -> uuid.equals(storage[i].getUuid()))
+                .findAny()
+                .orElse(-1);    }
 }

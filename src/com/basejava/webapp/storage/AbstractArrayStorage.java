@@ -7,7 +7,7 @@ import com.basejava.webapp.model.Resume;
 
 import java.util.Arrays;
 
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int STORAGE_LIMIT = 10000;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -25,49 +25,6 @@ public abstract class AbstractArrayStorage implements Storage {
         return Arrays.copyOf(storage, size);
     }
 
-    public Resume get(String uuid) {
-        if (uuid == null) {
-            throw new IllegalArgumentException();
-        }
-
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        return storage[index];
-    }
-
-    @Override
-    public void save(Resume r) {
-        if (r == null || r.getUuid() == null) {
-            throw new IllegalArgumentException();
-        }
-
-        int index = getIndex(r.getUuid());
-        if (index >= 0) {
-            throw new ExistStorageException(r.getUuid());
-        } else if (size >= STORAGE_LIMIT) {
-            throw new StorageException("Storage overflow", r.getUuid());
-        } else {
-            insertElement(r, index);
-            size++;
-        }
-    }
-
-    @Override
-    public void update(Resume r) {
-        if (r == null || r.getUuid() == null) {
-            throw new IllegalArgumentException();
-        }
-
-        int index = getIndex(r.getUuid());
-        if (index < 0) {
-            throw new NotExistStorageException(r.getUuid());
-        } else {
-            storage[index] = r;
-        }
-    }
-
     @Override
     public void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -75,24 +32,38 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     @Override
-    public void delete(String uuid) {
-        if (uuid == null) {
-            throw new IllegalArgumentException();
-        }
+    protected boolean isExist(Object index) {
+        return (Integer) index >= 0;
+    }
 
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
+    @Override
+    public Resume doGet(Object index) {
+        return storage[(Integer) index];
+    }
+
+    @Override
+    public void doSave(Resume r, Object index) {
+        if (size >= STORAGE_LIMIT) {
+            throw new StorageException("Storage overflow", r.getUuid());
         } else {
-            deleteByIndex(index);
-            storage[size - 1] = null;
-            size--;
+            insertElement(r, (Integer) index);
+            size++;
         }
     }
 
-    protected abstract int getIndex(String uuid);
+    @Override
+    public void doUpdate(Resume r, Object index) {
+        storage[(Integer) index] = r;
+    }
+
+    @Override
+    public void doDelete(Object index) {
+            fillDeletedElement((Integer) index);
+            storage[size - 1] = null;
+            size--;
+    }
 
     protected abstract void insertElement(Resume r, int index);
 
-    protected abstract void deleteByIndex(int index);
+    protected abstract void fillDeletedElement(int index);
 }
