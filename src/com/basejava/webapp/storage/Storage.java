@@ -2,6 +2,8 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.model.Resume;
 
+import java.util.List;
+
 /**
  * Array based com.basejava.webapp.storage for Resumes
  */
@@ -17,10 +19,7 @@ public interface Storage {
 
     void delete(String uuid);
 
-    /**
-     * @return array, contains only Resumes in com.basejava.webapp.storage (without null)
-     */
-    Resume[] getAll();
+    List<Resume> getAllSorted();
 
     int size();
 }

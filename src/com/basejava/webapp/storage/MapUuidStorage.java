@@ -2,10 +2,9 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.model.Resume;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-public class MapStorage extends AbstractStorage{
+public class MapUuidStorage extends AbstractStorage{
     protected Map<String, Resume> storage = new HashMap<String, Resume>();
 
     @Override
@@ -20,7 +19,7 @@ public class MapStorage extends AbstractStorage{
 
     @Override
     protected boolean isExist(Object uuid) {
-        return storage.containsKey(uuid);
+        return storage.containsKey((String) uuid);
     }
 
     @Override
@@ -44,8 +43,8 @@ public class MapStorage extends AbstractStorage{
     }
 
     @Override
-    public Resume[] getAll() {
-        return storage.values().toArray(new Resume[size()]);
+    protected List<Resume> doCopyAll() {
+        return new ArrayList<>(storage.values());
     }
 
     @Override
